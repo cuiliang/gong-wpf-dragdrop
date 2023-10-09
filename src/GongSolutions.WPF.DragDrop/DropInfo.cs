@@ -193,6 +193,12 @@ namespace GongSolutions.Wpf.DragDrop
             else
             {
                 this.TargetScrollViewer = this.VisualTarget?.GetVisualDescendent<ScrollViewer>();
+
+                // CuiLiang:20231009 对于内部不包含ScrollViewer的控件，需要找到外部的ScrollViewer（如步骤编辑器）
+                if (this.TargetScrollViewer == null)
+                {
+                    this.TargetScrollViewer = this.VisualTarget?.GetVisualAncestor<ScrollViewer>();
+                }
             }
 
             this.TargetScrollingMode = this.VisualTarget != null ? DragDrop.GetDropScrollingMode(this.VisualTarget) : ScrollingMode.Both;
